@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ====== Variables globales ====== */
+:root {
+  --radius: 1rem;
+}
+
+/* ====== Base ====== */
+@layer base {
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-white text-brand-graphite;
+  }
+}
+
+/* ====== Composants ====== */
+@layer components {
+  .container {
+    @apply max-w-6xl mx-auto px-4;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-2xl px-5 py-3 text-base font-semibold shadow-soft transition;
+  }
+
+  .btn-primary {
+    @apply bg-brand-teal text-white hover:bg-brand-teal/90;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-brand-teal text-brand-teal hover:bg-brand-teal hover:text-white;
+  }
+
+  .card {
+    @apply rounded-2xl bg-brand-cloud p-6 shadow-soft;
+  }
+
+  /* Typography / Prose */
+  .prose :where(h2):not(:where(.not-prose *)) {
+    @apply mt-10 mb-3 text-2xl md:text-3xl font-extrabold text-slate-900;
+  }
+  .prose :where(h3):not(:where(.not-prose *)) {
+    @apply mt-8 mb-2.5 text-xl md:text-2xl font-bold text-slate-900;
+  }
+  .prose :where(p):not(:where(.not-prose *)) {
+    @apply my-4 leading-7 text-[15.5px] text-slate-800;
+  }
+  .prose :where(ul,ol):not(:where(.not-prose *)) {
+    @apply my-4;
+  }
+  .prose :where(li):not(:where(.not-prose *)) {
+    @apply my-1;
+  }
+  .prose img {
+    @apply mx-auto my-6 rounded-2xl shadow;
+  }
+
+  .heading-link { text-decoration: none; }
+  .heading-link:hover { text-decoration: underline; }
+
+  /* Lettrine (1er paragraphe) */
+  .prose > p:first-of-type::first-letter {
+    float: left;
+    font-size: 3.1rem;
+    line-height: 1;
+    padding-right: .25rem;
+    font-weight: 700;
+    color: rgb(14 165 233); /* proche de brand-teal */
+  }
+}

@@ -1,0 +1,11 @@
+
+/* === Exatlantik UI refinements (append at end of globals.css) === */
+.btn { @apply inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold shadow-soft transition duration-200 ease-out active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-teal/40 focus-visible:ring-offset-2; }
+.btn-primary { @apply bg-brand-teal text-white hover:brightness-105 disabled:opacity-60 disabled:cursor-not-allowed; }
+.btn-ghost { @apply border border-slate-200 hover:bg-slate-50; }
+.btn-link { @apply underline underline-offset-4 hover:no-underline text-brand-teal; }
+.badge { @apply inline-flex items-center gap-1 rounded-full bg-brand-cloud text-brand-graphite px-3 py-1 text-xs font-medium; }
+.card { @apply rounded-2xl shadow-soft border border-slate-200 bg-white; }
+.elevate { @apply transition-shadow hover:shadow-lg; }
+.motion-pop { transform: translateY(0); transition: transform .2s ease, box-shadow .2s ease; }
+.motion-pop:hover { transform: translateY(-2px); }
