@@ -6,7 +6,6 @@ import { COLORS, TALLY_POST_ROLE_URL, CALENDLY_URL } from "@/lib/constants";
 export default function EntreprisesClient() {
   return (
     <>
-      {/* Bloc principal avec les boutons */}
       <div
         style={{
           backdropFilter: "blur(10px)",
@@ -35,7 +34,6 @@ export default function EntreprisesClient() {
         </a>
       </div>
 
-      {/* Scripts JSON-LD pour le SEO */}
       <JsonLd />
     </>
   );
