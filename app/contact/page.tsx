@@ -14,7 +14,7 @@ export default function Page() {
       <div id="eligibilite" className="bg-white rounded-xl shadow-lg border border-slate-200 p-4">
         <iframe
           src="https://tally.so/r/wkL1Vd"
-          width="100%"
+          width="100%" 
           height="700"
           frameBorder="0"
           title="Test d’éligibilité — Exatlantik"
