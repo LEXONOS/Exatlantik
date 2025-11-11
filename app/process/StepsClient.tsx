@@ -420,3 +420,4 @@ const FAQ = [
     a: "Une période de grâce peut être autorisée selon les consignes du sponsor. On te précise les règles avant le départ.",
   },
 ];
+  
