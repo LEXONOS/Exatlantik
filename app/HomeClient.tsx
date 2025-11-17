@@ -462,6 +462,7 @@ function Programs() {
   return (
     <section id="programmes" className="relative z-10 py-22">
       <DecorBlobs />
+
       <div className="container mx-auto max-w-7xl px-4 text-center">
         <h2 className="text-4xl font-extrabold text-slate-900 md:text-5xl">
           Choisis ton programme
@@ -479,39 +480,54 @@ function Programs() {
           — on t’aide à cadrer la durée, la ville et le sponsor.
         </p>
 
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {/* items-stretch = toutes les colonnes ont la même hauteur */}
+        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
           {programs.map((p) => (
             <TiltCard key={p.title} maxTilt={8}>
-              <Link
-                href={p.href}
-                className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/50 bg-white/80 p-7 shadow-xl backdrop-blur transition"
-              >
-                <span
-                  aria-hidden
-                  className="absolute inset-0 rounded-3xl opacity-0 ring-2 ring-cyan-300/40 shadow-[0_0_42px_12px_rgba(56,189,248,0.45)] transition duration-700 animate-[breathe_6s_ease-in-out_infinite] group-hover:opacity-100"
-                />
-                <div className="relative z-10 flex flex-1 flex-col">
-                  <div className="flex items-center gap-3">
-                    <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-[#0FB5AE] to-cyan-500 text-white shadow">
-                      {p.icon}
+              {/* h-full sur le Link */}
+              <Link href={p.href} className="group block h-full">
+                {/* h-full + min-h commune sur la carte */}
+                <div
+                  className="relative flex h-full min-h-[420px] flex-col overflow-hidden rounded-3xl 
+                             border border-white/50 bg-white/80 p-7 shadow-xl backdrop-blur 
+                             transition hover:border-cyan-300/60 hover:shadow-cyan-300/40"
+                >
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 rounded-3xl opacity-0 ring-2 ring-cyan-300/40 
+                               shadow-[0_0_42px_12px_rgba(56,189,248,0.45)] transition duration-700 
+                               animate-[breathe_6s_ease-in-out_infinite] group-hover:opacity-100"
+                  />
+
+                  <div className="relative z-10 flex flex-1 flex-col">
+                    <div className="flex items-center gap-3">
+                      <div className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-to-br from-[#0FB5AE] to-cyan-500 text-white shadow">
+                        {p.icon}
+                      </div>
+                      <h3 className="text-xl font-semibold">{p.title}</h3>
                     </div>
-                    <h3 className="text-xl font-semibold">{p.title}</h3>
-                  </div>
-                  <ul className="mt-5 flex-1 space-y-2 text-left text-sm text-slate-800">
-                    {p.bullets.map((b) => (
-                      <li key={b} className="flex items-start gap-2">
-                        <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-gradient-to-br from-[#0FB5AE] to-cyan-500" />
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="mt-3 line-clamp-3 text-left text-sm text-slate-700 transition-all group-hover:line-clamp-none">
-                    {p.hoverText}
-                  </p>
-                  <div className="mt-5 flex items-center justify-end text-sm font-semibold text-teal-700">
-                    <span className="opacity-80 transition group-hover:opacity-100">
-                      En savoir plus →
-                    </span>
+
+                    {/* bullets + texte occupent l'espace disponible */}
+                    <ul className="mt-5 flex-1 space-y-2 text-left text-sm text-slate-800">
+                      {p.bullets.map((b) => (
+                        <li key={b} className="flex items-start gap-2">
+                          <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-gradient-to-br from-[#0FB5AE] to-cyan-500" />
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* petite description, clampée pour éviter qu’une carte devienne plus haute */}
+                    <p className="mt-3 text-left text-sm text-slate-700 line-clamp-3">
+                      {p.hoverText}
+                    </p>
+
+                    {/* CTA collé en bas */}
+                    <div className="mt-5 flex items-center justify-end text-sm font-semibold text-teal-700">
+                      <span className="opacity-80 transition group-hover:opacity-100">
+                        En savoir plus →
+                      </span>
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -529,6 +545,8 @@ function Programs() {
     </section>
   );
 }
+
+
 
 function DecorBlobs() {
   return (
@@ -610,6 +628,7 @@ function BlogPreview() {
     </section>
   );
 }
+
 
 
 /* =========================================================================
