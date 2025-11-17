@@ -22,16 +22,14 @@ import {
  * HOME — Exatlantik
  * - Hero carrousel + slogan + CTA (Tally)
  * - Halo souris global (fix) + auroras + grain
+ * - Quick nav
+ * - Bandeau défilant cliquable (points clés J-1)
  * - Trust/Key facts
- * - Programmes (Intern/Trainee/SWT) avec tilt & micro-interactions
+ * - Programmes (Intern/Trainee/SWT/Camp) avec tilt & micro-interactions
  * - Blog preview (3 cartes) + Voir tout (/blog)
  * - Timeline moderne + lien /process
- * - Pourquoi nous (valeur → sans parler de la concurrence)
+ * - Bloc Tarifs & approche (teaser vers /tarifs)
  * - CTA final + Sticky CTA mobile
- *
- * Liens Tally :
- * - Préinscription (overlay + fallback href) : https://tally.so/r/wkL1Vd  (id: wkL1Vd)
- * - Être recontacté : https://tally.so/r/3XXYMd                    (id: 3XXYMd)
  */
 
 export default function HomeClient() {
@@ -43,6 +41,8 @@ export default function HomeClient() {
       <HeroWithCarousel />
 
       <QuickNav />
+
+      <ValueMarquee />
 
       <SectionDivider />
       <RevealSection>
@@ -66,7 +66,7 @@ export default function HomeClient() {
 
       <SectionDivider />
       <RevealSection>
-        <WhyUs />
+        <WhyUsPricingTeaser />
       </RevealSection>
 
       <SectionDivider />
@@ -93,7 +93,7 @@ function HeaderPills() {
   return (
     <nav
       aria-label="Accès rapide tarifs"
-      className="sticky top-0 z-[55] backdrop-blur supports-[backdrop-filter]:bg-white/55 bg-white/80 border-b border-white/60 hidden md:block"
+      className="sticky top-0 z-[55] hidden border-b border-white/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/55 md:block"
     >
       <div className="container mx-auto max-w-7xl px-4">
         <ul className="flex flex-wrap gap-2 py-2">
@@ -101,7 +101,7 @@ function HeaderPills() {
             <li key={i.href}>
               <Link
                 href={i.href}
-                className="inline-flex items-center gap-2 rounded-full border border-teal-200/70 bg-white/70 px-3 py-1.5 text-sm text-teal-700 hover:bg-teal-50 transition"
+                className="inline-flex items-center gap-2 rounded-full border border-teal-200/70 bg-white/70 px-3 py-1.5 text-sm text-teal-700 transition hover:bg-teal-50"
               >
                 <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-[#0FB5AE] to-cyan-500" />
                 {i.label}
@@ -180,68 +180,96 @@ function HeroWithCarousel() {
 
       {/* Overlays */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/45 to-transparent" />
-      <div className="absolute inset-0 [mask-image:radial-gradient(90%_70%_at_15%_50%,black,transparent)] bg-[radial-gradient(600px_240px_at_18%_55%,rgba(59,130,246,.14),transparent),radial-gradient(500px_220px_at_35%_35%,rgba(6,182,212,.16),transparent)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(600px_240px_at_18%_55%,rgba(59,130,246,.14),transparent),radial-gradient(500px_220px_at_35%_35%,rgba(6,182,212,.16),transparent)] [mask-image:radial-gradient(90%_70%_at_15%_50%,black,transparent)]" />
 
       {/* Texte */}
-      <div className="relative z-10 h-full flex flex-col justify-center px-6 md:px-20 text-white max-w-3xl">
-        <span className="inline-block bg-white/15 border border-white/25 text-xs md:text-sm font-medium px-3 py-1 rounded-full mb-4 backdrop-blur-sm">
+      <div className="relative z-10 flex h-full max-w-3xl flex-col justify-center px-6 text-white md:px-20">
+        <span className="mb-4 inline-block rounded-full border border-white/25 bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur-sm md:text-sm">
           Éligibilité sous 24–72h • Dossier sponsor sécurisé
         </span>
 
-        <h1 id="hero-title" className="text-4xl md:text-6xl font-extrabold leading-tight">
-          De l’autre côté de l’Atlantique, <span className="text-cyan-300">facilement</span>.
+        <h1
+          id="hero-title"
+          className="text-4xl font-extrabold leading-tight md:text-6xl"
+        >
+          De l’autre côté de l’Atlantique,{" "}
+          <span className="text-cyan-300">facilement</span>.
         </h1>
 
         <p className="mt-4 text-lg text-gray-200">
-          Accompagnateur projet J-1 : on structure ton plan (<strong>DS-7002</strong>), on valide le
-          dossier (<strong>DS-2019</strong>), on te prépare au consulat. Tu sais <em>quoi</em> faire,
-          <em> quand</em>, et <em> combien</em>.
+          Accompagnateur projet J-1 : on structure ton plan (
+          <strong>DS-7002</strong>), on valide le dossier (
+          <strong>DS-2019</strong>), on te prépare au consulat. Tu sais{" "}
+          <em>quoi</em> faire, <em>quand</em>, et <em>combien</em>.
         </p>
 
         {/* CTA */}
-        <div className="mt-8 flex flex-wrap gap-4 relative">
-          <span className="absolute -inset-3 rounded-[36px] bg-gradient-to-r from-cyan-400/20 via-sky-400/15 to-indigo-400/20 blur-2xl pointer-events-none" />
+        <div className="relative mt-8 flex flex-wrap gap-4">
+          <span className="pointer-events-none absolute -inset-3 rounded-[36px] bg-gradient-to-r from-cyan-400/20 via-sky-400/15 to-indigo-400/20 blur-2xl" />
 
           <Magnetic>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.96 }}
               className="group relative overflow-hidden rounded-2xl px-8 py-4 text-lg font-extrabold text-white shadow-2xl"
-              style={{ background: "linear-gradient(135deg,#0FB5AE,#06b6d4,#3b82f6)" }}
+              style={{
+                background:
+                  "linear-gradient(135deg,#0FB5AE,#06b6d4,#3b82f6)",
+              }}
               data-tally-open="wkL1Vd"
               data-tally-overlay="1"
             >
-              <span className="relative z-10">Préinscription (25 places)</span>
-              <div className="relative z-10 text-[11px] opacity-85">Gratuit • Sans engagement</div>
-              <span className="absolute inset-0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-[1200ms] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.45),transparent)]" />
+              <span className="relative z-10">
+                Préinscription (25 places)
+              </span>
+              <div className="relative z-10 text-[11px] opacity-85">
+                Gratuit • Sans engagement
+              </div>
+              <span className="absolute inset-0 translate-x-[-120%] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.45),transparent)] transition-transform duration-[1200ms] group-hover:translate-x-[120%]" />
             </motion.button>
           </Magnetic>
 
           <button
-            className="relative rounded-2xl px-6 py-4 text-lg font-semibold text-white/90 border border-white/30 bg-white/10 backdrop-blur-sm hover:bg-white/20 transition group"
+            className="group relative rounded-2xl border border-white/30 bg-white/10 px-6 py-4 text-lg font-semibold text-white/90 backdrop-blur-sm transition hover:bg-white/20"
             data-tally-open="3XXYMd"
             data-tally-overlay="1"
           >
             Être recontacté
-            <span className="absolute left-6 bottom-2 h-[2px] w-0 bg-gradient-to-r from-cyan-400 to-sky-500 transition-all duration-500 group-hover:w-[calc(100%-3rem)]" />
+            <span className="absolute bottom-2 left-6 h-[2px] w-0 bg-gradient-to-r from-cyan-400 to-sky-500 transition-all duration-500 group-hover:w-[calc(100%-3rem)]" />
           </button>
         </div>
 
-        {/* Dots */}
-        <div className="mt-8 flex items-center gap-2">
-          {photos.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => {
-                setDirection(i > index ? 1 : -1);
-                setIndex(i);
-              }}
-              className={`h-2.5 w-2.5 rounded-full border border-white/30 backdrop-blur-sm transition ${
-                i === index ? "bg-white" : "bg-white/20 hover:bg-white/40"
-              }`}
-              aria-label={`Aller à la slide ${i + 1}`}
-            />
-          ))}
+        {/* Dots + scroll indicator */}
+        <div className="mt-8 flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            {photos.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  setDirection(i > index ? 1 : -1);
+                  setIndex(i);
+                }}
+                className={`h-2.5 w-2.5 rounded-full border border-white/30 backdrop-blur-sm transition ${
+                  i === index
+                    ? "bg-white"
+                    : "bg-white/20 hover:bg-white/40"
+                }`}
+                aria-label={`Aller à la slide ${i + 1}`}
+              />
+            ))}
+          </div>
+
+          <motion.a
+            href="#programmes"
+            className="hidden items-center gap-2 text-xs text-white/70 hover:text-white md:inline-flex"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 1.3 }}
+          >
+            <span className="h-px w-5 bg-white/40" />
+            <span>Faire défiler pour découvrir les programmes</span>
+            <span className="inline-block text-sm animate-bounce">↓</span>
+          </motion.a>
         </div>
       </div>
 
@@ -270,7 +298,7 @@ function CarouselArrow({
   return (
     <button
       onClick={onClick}
-      className={`absolute ${position}-4 top-1/2 -translate-y-1/2 bg-white/20 border border-white/30 text-white backdrop-blur-sm rounded-full p-3 shadow-lg z-20 hover:bg-white/30 hover:scale-105 transition-all duration-300`}
+      className={`absolute ${position}-4 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/30 bg-white/20 p-3 text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-white/30`}
       aria-label={label}
     >
       {children}
@@ -287,13 +315,16 @@ function QuickNav() {
     { href: "#programmes", label: "Programmes" },
     { href: "#blog", label: "Blog" },
     { href: "#timeline", label: "Parcours" },
-    { href: "#pourquoi-nous", label: "Pourquoi nous" },
-    { href: "/tarifs", label: "Tarifs" },
+    { href: "#pourquoi-nous", label: "Tarifs & approche" },
+    { href: "/tarifs", label: "Page Tarifs complète" },
     { href: "https://tally.so/r/3XXYMd", label: "Être recontacté" },
   ];
   return (
-    <nav aria-label="Navigation rapide" className="relative z-10 mx-auto max-w-6xl px-4 -mt-6">
-      <div className="overflow-auto rounded-2xl border border-white/40 bg-white/60 backdrop-blur p-2 shadow-sm">
+    <nav
+      aria-label="Navigation rapide"
+      className="relative z-10 mx-auto -mt-6 max-w-6xl px-4"
+    >
+      <div className="overflow-auto rounded-2xl border border-white/40 bg-white/60 p-2 shadow-sm backdrop-blur">
         <ul className="flex items-center gap-2 whitespace-nowrap">
           {items.map((it) => (
             <li key={it.label}>
@@ -308,6 +339,66 @@ function QuickNav() {
         </ul>
       </div>
     </nav>
+  );
+}
+
+/* =========================================================================
+   BANDEAU DÉFILANT — Points clés J-1 (cliquables)
+   ========================================================================= */
+
+function ValueMarquee() {
+  const items: { label: string; href: string }[] = [
+    { label: "Visa J-1 Intern", href: "/programmes/intern" },
+    { label: "Visa J-1 Trainee", href: "/programmes/trainee" },
+    { label: "Summer Work Travel", href: "/programmes/swt" },
+    { label: "Camp Counselor (Summer Camp)", href: "/programmes/camp" },
+    { label: "Plan de formation DS-7002", href: "/process" },
+    { label: "DS-2019 avec sponsor agréé", href: "/process" },
+    { label: "Consulat & entretien J-1", href: "/process" },
+    { label: "Frais officiels & budget", href: "/tarifs" },
+    { label: "Accompagnement entreprises", href: "/entreprises" },
+    {
+      label: "Parler de ton projet J-1",
+      href: "https://tally.so/r/3XXYMd",
+    },
+  ];
+
+  const duplicated = [...items, ...items];
+
+  return (
+    <section
+      aria-label="Points clés Exatlantik"
+      className="relative z-20 mt-6 border-y border-white/60 bg-white/50 backdrop-blur-sm"
+    >
+      <div className="pointer-events-none absolute left-0 top-0 h-full w-16 bg-gradient-to-r from-white/90 to-transparent" />
+      <div className="pointer-events-none absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-white/90 to-transparent" />
+
+      <div className="relative mx-auto max-w-7xl overflow-hidden px-4">
+        <motion.div
+          className="flex gap-4 py-3"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            repeat: Infinity,
+            duration: 30,
+            ease: "linear",
+          }}
+        >
+          {duplicated.map((item, index) => (
+            <a
+              key={`${item.label}-${index}`}
+              href={item.href}
+              className="flex shrink-0 items-center gap-2 rounded-full border border-teal-200/70 bg-white/80 px-3 py-1 text-xs font-medium text-slate-700 shadow-sm transition hover:border-teal-300 hover:bg-teal-50"
+              {...(item.href.startsWith("http")
+                ? { target: "_blank", rel: "noreferrer" }
+                : {})}
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-br from-[#0FB5AE] to-cyan-500" />
+              <span>{item.label}</span>
+            </a>
+          ))}
+        </motion.div>
+      </div>
+    </section>
   );
 }
 
@@ -346,7 +437,7 @@ function TrustBar() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
             transition={{ duration: 0.4, delay: i * 0.05 }}
-            className="group relative rounded-2xl border border-white/50 bg-white/70 p-5 backdrop-blur shadow-sm"
+            className="group relative rounded-2xl border border-white/50 bg-white/70 p-5 shadow-sm backdrop-blur"
           >
             <div className="flex items-center gap-3">
               <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#0FB5AE] to-cyan-500 text-white shadow">
@@ -355,7 +446,7 @@ function TrustBar() {
               <h3 className="font-semibold text-slate-900">{it.title}</h3>
             </div>
             <p className="mt-2 text-sm text-slate-700">{it.desc}</p>
-            <span className="pointer-events-none absolute left-5 right-5 bottom-3 h-px bg-gradient-to-r from-transparent via-teal-400/70 to-transparent scale-x-0 group-hover:scale-x-100 origin-center transition-transform" />
+            <span className="pointer-events-none absolute bottom-3 left-5 right-5 h-px origin-center scale-x-0 bg-gradient-to-r from-transparent via-teal-400/70 to-transparent transition-transform group-hover:scale-x-100" />
           </motion.article>
         ))}
       </div>
@@ -372,17 +463,23 @@ function Programs() {
     <section id="programmes" className="relative z-10 py-22">
       <DecorBlobs />
       <div className="container mx-auto max-w-7xl px-4 text-center">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900">
+        <h2 className="text-4xl font-extrabold text-slate-900 md:text-5xl">
           Choisis ton programme
         </h2>
         <p className="mt-3 text-lg text-slate-700">
           <span className="font-semibold text-teal-700">Intern</span>,{" "}
-          <span className="font-semibold text-teal-700">Trainee</span> ou{" "}
-          <span className="font-semibold text-teal-700">Summer Work Travel</span>
-          — on t’aide à calibrer la durée, la ville et le sponsor.
+          <span className="font-semibold text-teal-700">Trainee</span>,{" "}
+          <span className="font-semibold text-teal-700">
+            Summer Work Travel
+          </span>{" "}
+          ou{" "}
+          <span className="font-semibold text-teal-700">
+            Camp Counselor (Summer Camp)
+          </span>{" "}
+          — on t’aide à cadrer la durée, la ville et le sponsor.
         </p>
 
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {programs.map((p) => (
             <TiltCard key={p.title} maxTilt={8}>
               <Link
@@ -391,7 +488,7 @@ function Programs() {
               >
                 <span
                   aria-hidden
-                  className="absolute inset-0 rounded-3xl ring-2 ring-cyan-300/40 shadow-[0_0_42px_12px_rgba(56,189,248,0.45)] opacity-0 group-hover:opacity-100 transition duration-700 animate-[breathe_6s_ease-in-out_infinite]"
+                  className="absolute inset-0 rounded-3xl opacity-0 ring-2 ring-cyan-300/40 shadow-[0_0_42px_12px_rgba(56,189,248,0.45)] transition duration-700 animate-[breathe_6s_ease-in-out_infinite] group-hover:opacity-100"
                 />
                 <div className="relative z-10 flex flex-1 flex-col">
                   <div className="flex items-center gap-3">
@@ -452,7 +549,9 @@ function BlogPreview() {
       <div className="container mx-auto max-w-7xl px-4">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold">Derniers articles</h2>
+            <h2 className="text-3xl font-bold md:text-4xl">
+              Derniers articles
+            </h2>
             <p className="mt-2 text-slate-600">
               Guides, actus visas J-1 et retours d’expérience.
             </p>
@@ -473,7 +572,7 @@ function BlogPreview() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-15% 0px -15% 0px" }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="group overflow-hidden rounded-2xl border border-white/50 bg-white/70 backdrop-blur shadow-sm"
+              className="group overflow-hidden rounded-2xl border border-white/50 bg-white/70 shadow-sm backdrop-blur"
             >
               <div className="relative h-44 w-full overflow-hidden">
                 <img
@@ -491,7 +590,9 @@ function BlogPreview() {
                   <span>•</span>
                   <time dateTime={p.datetime}>{p.date}</time>
                 </div>
-                <h3 className="mt-2 font-semibold text-slate-900">{p.title}</h3>
+                <h3 className="mt-2 font-semibold text-slate-900">
+                  {p.title}
+                </h3>
                 <p className="mt-1 line-clamp-2 text-sm text-slate-700">
                   {p.excerpt}
                 </p>
@@ -510,8 +611,9 @@ function BlogPreview() {
   );
 }
 
+
 /* =========================================================================
-   TIMELINE — Frise animée + lien process
+   TIMELINE — Frise verticale + badges temps + teaser /process
    ========================================================================= */
 
 function Timeline() {
@@ -523,103 +625,469 @@ function Timeline() {
     <SectionShell
       id="timeline"
       title="Combien de temps ça prend ?"
-      subtitle="Un aperçu réaliste (peut varier selon sponsor / saison)."
+      subtitle="Vue réaliste du parcours J-1, de l’éligibilité jusqu’au départ (les délais peuvent varier selon sponsor et saison)."
     >
-      <div className="relative mt-12" ref={ref}>
-        <motion.div
-          className="absolute top-8 left-0 h-1 rounded bg-gradient-to-r from-[#0FB5AE] via-cyan-400 to-blue-500"
-          initial={{ width: 0 }}
-          animate={{ width: inView ? "100%" : 0 }}
-          transition={{ duration: 1.1, ease: "easeInOut" }}
+      <div ref={ref} className="relative mt-12">
+        {/* Fond doux derrière la frise */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -inset-x-4 -inset-y-6 rounded-[40px] bg-gradient-to-br from-cyan-50/90 via-white to-sky-50/80 shadow-[0_18px_60px_rgba(15,181,174,0.12)]"
         />
-        <div className="relative z-10 grid grid-cols-1 gap-6 md:grid-cols-5">
-          {steps.map((s, i) => (
+
+        <div className="relative grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,1.4fr)]">
+          {/* Colonne timeline */}
+          <div className="relative">
+            {/* Ligne verticale animée (desktop) */}
             <motion.div
-              key={s.title}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: i * 0.08 }}
-              className="group text-center md:text-left"
-            >
-              <div className="mx-auto md:mx-0 inline-flex w-auto items-center gap-2 rounded-full border border-teal-200/70 bg-white/80 px-3 py-2 text-xs font-semibold text-teal-700 shadow-sm backdrop-blur">
-                <span className="inline-grid h-7 w-7 place-items-center rounded-full bg-gradient-to-br from-[#0FB5AE] to-cyan-500 text-white shadow">
-                  {s.badge}
-                </span>
-                {s.step}
-              </div>
+              className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-[3px] -translate-x-1/2 rounded-full bg-gradient-to-b from-[#0FB5AE] via-cyan-400 to-blue-500 md:block"
+              initial={{ scaleY: 0 }}
+              animate={{ scaleY: inView ? 1 : 0 }}
+              style={{ transformOrigin: "top" }}
+              transition={{ duration: 1.1, ease: "easeInOut" }}
+            />
 
-              <div className="mt-3 rounded-2xl border border-white/60 bg-white/75 p-4 shadow-sm backdrop-blur transition group-hover:shadow-md">
-                <div className="flex items-center gap-2 text-sm font-semibold text-slate-900">
-                  <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-[#0FB5AE] to-cyan-500 text-white">
-                    {s.icon}
-                  </span>
-                  {s.title}
+            {/* Desktop : alternance gauche / droite */}
+            <div className="hidden md:grid md:grid-cols-1 md:gap-10">
+              {steps.map((step, index) => (
+                <TimelineItem
+                  key={step.title}
+                  step={step}
+                  index={index}
+                  total={steps.length}
+                />
+              ))}
+            </div>
+
+            {/* Mobile : cartes en colonne */}
+            <div className="grid gap-6 md:hidden">
+              {steps.map((step, index) => (
+                <motion.div
+                  key={step.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, delay: index * 0.05 }}
+                  className="group"
+                >
+                  <TimelineNode badge={step.badge} step={step.step} />
+                  <div className="mt-3">
+                    <TimelineCard
+                      title={step.title}
+                      desc={step.desc}
+                      icon={step.icon}
+                      badge={step.badge}
+                      step={step.step}
+                      index={index}
+                      total={steps.length}
+                    />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Colonne résumé / teaser process */}
+          <motion.aside
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, delay: 0.1 }}
+            className="relative overflow-hidden rounded-3xl border border-white/70 bg-white/90 p-6 text-left shadow-sm backdrop-blur"
+          >
+            <span className="pointer-events-none absolute -right-24 -top-20 h-48 w-48 rounded-full bg-cyan-100/60 blur-3xl" />
+            <span className="pointer-events-none absolute -left-10 bottom-[-40px] h-40 w-40 rounded-full bg-teal-100/60 blur-3xl" />
+
+            <h3 className="relative text-sm font-semibold uppercase tracking-wide text-teal-700">
+              Délai global indicatif
+            </h3>
+            <p className="relative mt-1 text-sm text-slate-700">
+              Dans la majorité des dossiers, compte{" "}
+              <strong>environ 2 à 3 mois</strong> entre ton premier contact et
+              le départ, si ton entreprise et les paiements avancent sans
+              blocage.
+            </p>
+
+            <dl className="relative mt-5 space-y-3 text-sm">
+              <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-100 bg-slate-50/80 px-3 py-2">
+                <div>
+                  <dt className="text-xs font-semibold text-slate-500">
+                    Première réponse
+                  </dt>
+                  <dd className="text-sm font-medium text-slate-900">
+                    J+1 à J+3 ouvrés
+                  </dd>
                 </div>
-                <p className="mt-2 text-xs text-slate-600">{s.desc}</p>
+                <span className="rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-700">
+                  Éligibilité
+                </span>
               </div>
-            </motion.div>
-          ))}
-        </div>
+              <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-100 bg-white px-3 py-2">
+                <div>
+                  <dt className="text-xs font-semibold text-slate-500">
+                    Mise en route dossier
+                  </dt>
+                  <dd className="text-sm font-medium text-slate-900">
+                    1–2 semaines
+                  </dd>
+                </div>
+                <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-700">
+                  Matching & DS-7002
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-100 bg-white px-3 py-2">
+                <div>
+                  <dt className="text-xs font-semibold text-slate-500">
+                    Dossier complet & consulat
+                  </dt>
+                  <dd className="text-sm font-medium text-slate-900">
+                    3–8 semaines
+                  </dd>
+                </div>
+                <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700">
+                  DS-2019, SEVIS, MRV
+                </span>
+              </div>
+            </dl>
 
-        <div className="mt-10 flex justify-center">
-          <AnimatedPrimaryLink href="/process" label="Voir le parcours détaillé" />
+            <p className="relative mt-4 text-xs text-slate-500">
+              Ces délais sont indicatifs : ils dépendent du sponsor choisi, de
+              la saison, de la réactivité de ton entreprise d’accueil et des
+              disponibilités du consulat.
+            </p>
+
+            <div className="relative mt-5 flex flex-col gap-3">
+              <AnimatedPrimaryLink
+                href="/process"
+                label="Voir le parcours détaillé étape par étape"
+              />
+              <button
+                className="rounded-2xl border border-teal-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 hover:bg-teal-50"
+                data-tally-open="3XXYMd"
+                data-tally-overlay="1"
+              >
+                Poser une question sur les délais
+              </button>
+            </div>
+          </motion.aside>
         </div>
       </div>
     </SectionShell>
   );
 }
 
+/* Item desktop (une ligne de la frise) */
+function TimelineItem({
+  step,
+  index,
+  total,
+}: {
+  step: (typeof timelineSteps)[number];
+  index: number;
+  total: number;
+}) {
+  const isLeft = index % 2 === 0;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 26 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.45, delay: index * 0.08 }}
+      className="group relative grid grid-cols-[minmax(0,1fr)_72px_minmax(0,1fr)] items-center gap-6"
+    >
+      {/* Carte gauche */}
+      <div className={isLeft ? "" : "pointer-events-none opacity-0"}>
+        {isLeft && (
+          <TimelineCard
+            title={step.title}
+            desc={step.desc}
+            icon={step.icon}
+            badge={step.badge}
+            step={step.step}
+            index={index}
+            total={total}
+            align="right"
+          />
+        )}
+      </div>
+
+      {/* Nœud central */}
+      <div className="flex flex-col items-center justify-center gap-2">
+        <TimelineNode badge={step.badge} step={step.step} />
+      </div>
+
+      {/* Carte droite */}
+      <div className={isLeft ? "pointer-events-none opacity-0" : ""}>
+        {!isLeft && (
+          <TimelineCard
+            title={step.title}
+            desc={step.desc}
+            icon={step.icon}
+            badge={step.badge}
+            step={step.step}
+            index={index}
+            total={total}
+            align="left"
+          />
+        )}
+      </div>
+    </motion.div>
+  );
+}
+
+/* Nœud central : double rond + badge temps juste en dessous */
+function TimelineNode({ badge, step }: { badge: string; step: string }) {
+  return (
+    <motion.div
+      whileHover={{ scale: 1.07 }}
+      transition={{ type: "spring", stiffness: 220, damping: 16 }}
+      className="flex flex-col items-center gap-2"
+    >
+      <div className="relative h-9 w-9">
+        <div className="absolute inset-0 rounded-full bg-white shadow-[0_0_0_1px_rgba(148,163,184,0.25),0_8px_18px_rgba(15,23,42,0.18)]" />
+        <div className="absolute inset-[3px] rounded-full bg-gradient-to-br from-[#0FB5AE] to-cyan-500" />
+        <div className="absolute inset-[6px] rounded-full bg-white" />
+        <span className="absolute inset-0 grid place-items-center text-[11px] font-semibold text-teal-700">
+          {badge}
+        </span>
+      </div>
+
+      <div className="inline-flex items-center gap-2 rounded-full border border-teal-100 bg-white/95 px-2.5 py-1 text-[11px] font-medium text-teal-700 shadow-sm">
+        <span className="inline-block h-1.5 w-1.5 rounded-full bg-gradient-to-br from-[#0FB5AE] to-cyan-500" />
+        {step}
+      </div>
+    </motion.div>
+  );
+}
+
+/* Carte étape : avec badge, durée, titre, desc + phase */
+function TimelineCard({
+  title,
+  desc,
+  icon,
+  badge,
+  step,
+  index,
+  total,
+  align,
+}: {
+  title: string;
+  desc: string;
+  icon: ReactNode;
+  badge: string;
+  step: string;
+  index: number;
+  total: number;
+  align?: "left" | "right";
+}) {
+  const textAlign =
+    align === "right" ? "md:text-right" : align === "left" ? "md:text-left" : "";
+  const rowDirection = align === "right" ? "md:flex-row-reverse" : "";
+
+  return (
+    <motion.article
+      whileHover={{ y: -4, scale: 1.01 }}
+      transition={{ type: "spring", stiffness: 220, damping: 18 }}
+      className={`relative overflow-hidden rounded-2xl border border-white/70 bg-white/90 p-4 shadow-sm backdrop-blur transition group hover:border-teal-200 hover:shadow-lg ${textAlign}`}
+    >
+      {/* glow au survol */}
+      <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-50 via-transparent to-sky-50 opacity-0 transition-opacity group-hover:opacity-100" />
+
+      {/* Bandeau étape + durée */}
+      <div
+        className={`relative inline-flex items-center gap-2 rounded-full border border-teal-100 bg-white/95 px-3 py-1 text-[11px] font-semibold text-teal-700 shadow-sm ${
+          align === "right" ? "md:ml-auto" : ""
+        }`}
+      >
+        <span className="inline-grid h-5 w-5 place-items-center rounded-full bg-gradient-to-br from-[#0FB5AE] to-cyan-500 text-[11px] text-white shadow">
+          {badge}
+        </span>
+        <span>Étape {index + 1}</span>
+        <span className="text-slate-400">•</span>
+        <span>{step}</span>
+      </div>
+
+      {/* Titre + icône */}
+      <div
+        className={`relative mt-3 flex items-center gap-2 text-sm font-semibold text-slate-900 ${rowDirection}`}
+      >
+        <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-[#0FB5AE] to-cyan-500 text-white shadow">
+          {icon}
+        </span>
+        <span>{title}</span>
+      </div>
+
+      <p className="relative mt-2 text-xs text-slate-600">{desc}</p>
+
+      {/* Phase sous forme de petit mémo en bas */}
+      <div className="relative mt-3 flex items-center justify-between text-[11px] text-slate-400">
+        <span>On avance étape par étape, sans surprise.</span>
+        <span className="font-medium text-slate-500">
+          Phase {index + 1} / {total}
+        </span>
+      </div>
+    </motion.article>
+  );
+}
+
+
+
 /* =========================================================================
-   POURQUOI NOUS — Valeur (subtile)
+   BLOC TARIFS & APPROCHE — mini tableau + teaser vers /tarifs
    ========================================================================= */
 
-function WhyUs() {
-  const cards = [
+/* =========================================================================
+   BLOC TARIFS & APPROCHE — Teaser vers /tarifs
+   ========================================================================= */
+
+function WhyUsPricingTeaser() {
+  const rows = [
     {
-      title: "Clarté & pédagogie",
-      desc:
-        "On traduit les exigences J-1 en étapes concrètes et actionnables, sans jargon.",
+      label: "Accompagnement J-1 (Intern / Trainee)",
+      value: "À partir de 390 €",
+      note: "Tu as déjà une entreprise d’accueil",
     },
     {
-      title: "Orchestration complète",
-      desc:
-        "Coordination entreprise/sponsor, DS-7002 & DS-2019, formulaires SEVIS/MRV/DS-160, préparation entretien.",
+      label: "Placement + accompagnement",
+      value: "À partir de 590 €",
+      note: "On t’aide à trouver l’entreprise + dossier complet",
     },
     {
-      title: "Optimisation du budget",
-      desc:
-        "Choix sponsor/durée/ville pour maîtriser les frais officiels et les délais, sans sacrifier la qualité.",
-    },
-    {
-      title: "Suivi réactif",
-      desc:
-        "Réponse sous 48–72h, checklists et modèles. Tu sais quoi faire, quand et pourquoi.",
+      label: "Summer Work Travel (SWT)",
+      value: "Early Bird dès 390 €",
+      note: "Tarif évolutif selon la date d’inscription",
     },
   ];
+
   return (
     <SectionShell
       id="pourquoi-nous"
-      title="Notre approche"
-      subtitle="Pas de promesses vagues : un plan clair, une exécution soignée."
+      title="Notre approche & nos tarifs, sans surprise"
+      subtitle="Honoraires clairs côté Exatlantik, frais officiels séparés (SEVIS, MRV, sponsor, assurance)."
     >
-      <div className="mt-10 grid gap-6 md:grid-cols-2">
-        {cards.map((c) => (
-          <motion.article
-            key={c.title}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="rounded-2xl border border-white/60 bg-white/75 p-6 shadow-sm backdrop-blur"
-          >
-            <h3 className="text-slate-900 font-semibold">{c.title}</h3>
-            <p className="mt-2 text-sm text-slate-700">{c.desc}</p>
-          </motion.article>
-        ))}
+      <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] items-start">
+        {/* Colonne texte / valeur ajoutée */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45 }}
+          className="space-y-4 text-left"
+        >
+          <p className="text-sm text-slate-700">
+            On ne vend pas un “visa magique” : on orchestre{" "}
+            <strong>tout le parcours J-1</strong> avec toi et ton entreprise —
+            du plan de formation <strong>DS-7002</strong> jusqu’à{" "}
+            <strong>l’entretien au consulat</strong>.
+          </p>
+          <ul className="space-y-3 text-sm text-slate-700">
+            <li className="flex gap-2">
+              <span className="mt-1 h-1.5 w-1.5 rounded-full bg-gradient-to-br from-[#0FB5AE] to-cyan-500" />
+              <span>
+                <strong>Cadrage</strong> : on valide ton éligibilité, la durée,
+                la ville et le type de sponsor adapté.
+              </span>
+            </li>
+            <li className="flex gap-2">
+              <span className="mt-1 h-1.5 w-1.5 rounded-full bg-gradient-to-br from-[#0FB5AE] to-cyan-500" />
+              <span>
+                <strong>Montage & conformité</strong> : DS-2019, SEVIS, MRV,
+                DS-160, lettres, attestations… on t’évite les erreurs qui font
+                perdre des semaines.
+              </span>
+            </li>
+            <li className="flex gap-2">
+              <span className="mt-1 h-1.5 w-1.5 rounded-full bg-gradient-to-br from-[#0FB5AE] to-cyan-500" />
+              <span>
+                <strong>Préparation consulat</strong> : questions possibles,
+                angles de réponse, check de ton dossier avant le rendez-vous.
+              </span>
+            </li>
+          </ul>
+
+          <p className="text-xs text-slate-500">
+            Les <strong>frais officiels</strong> (SEVIS, MRV, sponsor,
+            assurance) représentent en général{" "}
+            <strong>~1 500 à 3 000 $</strong> selon la durée et le programme.
+            Ils sont réglés directement aux organismes tiers, jamais à
+            Exatlantik.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Link
+              href="/tarifs"
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-2xl border border-teal-300/70 bg-white/80 px-6 py-3 text-sm font-semibold text-teal-700 backdrop-blur transition hover:border-teal-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200/70"
+            >
+              <span className="relative z-10">Voir les tarifs détaillés</span>
+              <span className="relative z-10 text-lg group-hover:translate-x-0.5 transition">
+                →
+              </span>
+              <span className="pointer-events-none absolute inset-0 translate-x-[-120%] bg-[linear-gradient(90deg,transparent,rgba(16,185,129,0.16),transparent)] transition-transform duration-700 group-hover:translate-x-[120%]" />
+            </Link>
+
+            <button
+              className="rounded-2xl border border-teal-200 bg-white/80 px-5 py-3 text-sm font-semibold text-slate-800 hover:bg-teal-50"
+              data-tally-open="3XXYMd"
+              data-tally-overlay="1"
+            >
+              Poser une question sur les coûts
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Colonne tableau tarifs */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45, delay: 0.05 }}
+          className="relative overflow-hidden rounded-3xl border border-white/60 bg-white/80 p-5 text-left shadow-sm backdrop-blur"
+        >
+          <span className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-cyan-100/50 blur-3xl" />
+          <h3 className="relative text-sm font-semibold uppercase tracking-wide text-teal-700">
+            Aperçu des honoraires Exatlantik
+          </h3>
+          <p className="relative mt-1 text-xs text-slate-500">
+            Exemple de niveaux de prix — le détail complet est sur la page
+            Tarifs.
+          </p>
+
+          <div className="relative mt-4 divide-y divide-slate-100 rounded-2xl border border-slate-100 bg-white/80 text-sm">
+            {rows.map((r) => (
+              <div
+                key={r.label}
+                className="group flex flex-col gap-1 px-4 py-3 transition hover:bg-teal-50/60"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-medium text-slate-900">
+                    {r.label}
+                  </span>
+                  <span className="rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-700 shadow-sm">
+                    {r.value}
+                  </span>
+                </div>
+                <span className="text-[11px] text-slate-500">{r.note}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="relative mt-4 rounded-xl border border-amber-100 bg-amber-50/70 px-3 py-3 text-xs text-amber-900">
+            <div className="font-semibold text-[11px] uppercase tracking-wide">
+              Mémo budget global
+            </div>
+            <p className="mt-1">
+              <strong>Honoraires Exatlantik</strong> (ci-dessus) +{" "}
+              <strong>frais officiels</strong> (SEVIS, MRV, sponsor, assurance,
+              éventuels envois DHL / traductions). Le détail chiffré est
+              présenté sur la page Tarifs.
+            </p>
+          </div>
+        </motion.div>
       </div>
     </SectionShell>
   );
 }
+
 
 /* =========================================================================
    CTA FINAL
@@ -629,7 +1097,7 @@ function FinalCTA() {
   return (
     <section className="relative z-10 py-16 text-center">
       <div className="container mx-auto max-w-4xl px-4">
-        <h2 className="text-2xl md:text-3xl font-bold">
+        <h2 className="text-2xl font-bold md:text-3xl">
           Prêt à lancer ton projet J-1 ?
         </h2>
         <p className="mt-2 text-slate-600">
@@ -708,7 +1176,7 @@ function SectionShell({
   return (
     <section id={id} className="relative z-10 py-16">
       <div className="container mx-auto max-w-7xl px-4 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold">{title}</h2>
+        <h2 className="text-3xl font-bold md:text-4xl">{title}</h2>
         {subtitle && <p className="mt-2 text-slate-600">{subtitle}</p>}
         {children}
       </div>
@@ -731,8 +1199,8 @@ function HoverLinkButton({ href, label }: { href: string; label: string }) {
       className="group relative overflow-hidden rounded-2xl border border-teal-300/70 bg-white/70 px-7 py-3 font-semibold text-teal-700 backdrop-blur transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200/70"
     >
       <span className="relative z-10">{label}</span>
-      <span className="absolute inset-0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700 bg-[linear-gradient(90deg,transparent,rgba(16,185,129,0.12),transparent)]" />
-      <span className="absolute -inset-8 rounded-[28px] bg-[#0FB5AE]/10 opacity-0 group-hover:opacity-100 blur-2xl transition" />
+      <span className="absolute inset-0 translate-x-[-120%] bg-[linear-gradient(90deg,transparent,rgba(16,185,129,0.12),transparent)] transition-transform duration-700 group-hover:translate-x-[120%]" />
+      <span className="absolute -inset-8 rounded-[28px] bg-[#0FB5AE]/10 opacity-0 blur-2xl transition group-hover:opacity-100" />
     </Link>
   );
 }
@@ -747,11 +1215,11 @@ function AnimatedPrimaryLink({
   return (
     <Link
       href={href}
-      className="group relative rounded-2xl border border-teal-300/70 bg-white/70 px-7 py-4 font-semibold text-teal-700 backdrop-blur transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200/70 overflow-hidden"
+      className="group relative overflow-hidden rounded-2xl border border-teal-300/70 bg-white/70 px-7 py-4 font-semibold text-teal-700 backdrop-blur transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-200/70"
     >
       <span className="relative z-10">{label}</span>
-      <span className="absolute inset-0 translate-x-[-120%] group-hover:translate-x-[120%] transition-transform duration-700 bg-[linear-gradient(90deg,transparent,rgba(16,185,129,0.12),transparent)]" />
-      <span className="absolute -inset-8 rounded-[28px] bg-[#0FB5AE]/10 opacity-0 group-hover:opacity-100 blur-2xl transition" />
+      <span className="absolute inset-0 translate-x-[-120%] bg-[linear-gradient(90deg,transparent,rgba(16,185,129,0.12),transparent)] transition-transform duration-700 group-hover:translate-x-[120%]" />
+      <span className="absolute -inset-8 rounded-[28px] bg-[#0FB5AE]/10 opacity-0 blur-2xl transition group-hover:opacity-100" />
     </Link>
   );
 }
@@ -853,7 +1321,7 @@ function ScrollProgressBar() {
   return (
     <motion.div
       style={{ scaleX }}
-      className="fixed left-0 top-0 h-1 w-full origin-left bg-gradient-to-r from-[#0FB5AE] via-cyan-400 to-blue-500 z-[60] pointer-events-none"
+      className="pointer-events-none fixed left-0 top-0 z-[60] h-1 w-full origin-left bg-gradient-to-r from-[#0FB5AE] via-cyan-400 to-blue-500"
     />
   );
 }
@@ -872,7 +1340,7 @@ function GlobalPointerHalo() {
     if (!el) return;
 
     const onMove = (e: PointerEvent) => {
-      const x = e.clientX; // viewport-based → ok avec position:fixed
+      const x = e.clientX;
       const y = e.clientY;
       el.style.setProperty("--mx", `${x}px`);
       el.style.setProperty("--my", `${y}px`);
@@ -903,9 +1371,9 @@ function GlobalPointerHalo() {
         }}
       />
       {/* Aurora blobs */}
-      <div className="absolute -top-36 -left-28 h-[560px] w-[560px] rounded-full bg-cyan-400/20 blur-[120px] animate-pulse-slow" />
-      <div className="absolute top-24 right-[-140px] h-[520px] w-[520px] rounded-full bg-blue-500/20 blur-[110px] animate-pulse-slower" />
-      <div className="absolute bottom-[-220px] left-1/2 -translate-x-1/2 h-[680px] w-[680px] rounded-full bg-indigo-500/16 blur-[130px] animate-pulse-slowest" />
+      <div className="animate-pulse-slow absolute -top-36 -left-28 h-[560px] w-[560px] rounded-full bg-cyan-400/20 blur-[120px]" />
+      <div className="animate-pulse-slower absolute top-24 right-[-140px] h-[520px] w-[520px] rounded-full bg-blue-500/20 blur-[110px]" />
+      <div className="animate-pulse-slowest absolute bottom-[-220px] left-1/2 h-[680px] w-[680px] -translate-x-1/2 rounded-full bg-indigo-500/16 blur-[130px]" />
       {/* Beams + grain */}
       <div className="absolute inset-0 opacity-25 [background:repeating-linear-gradient(120deg,rgba(255,255,255,0.10)_0px,rgba(255,255,255,0.10)_1px,transparent_2px,transparent_10px)] [mask-image:radial-gradient(65%_55%_at_50%_0%,black,transparent)]" />
       <div
@@ -965,6 +1433,18 @@ const programs = [
     hoverText:
       "Travaille l’été, découvre les USA et enrichis ton CV (Early Bird).",
     icon: <IconSun />,
+  },
+  {
+    href: "/programmes/camp",
+    title: "Camp Counselor",
+    bullets: [
+      "Étudiants & profils pédagogiques",
+      "8–12 semaines en summer camp",
+      "Vie de camp, collectif international",
+    ],
+    hoverText:
+      "Anime un summer camp, progresse en anglais et en leadership dans un cadre encadré.",
+    icon: <IconCamp />,
   },
 ];
 
@@ -1147,6 +1627,31 @@ function IconPlane() {
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
       <path
         d="M10 21l2-6 7-5-11 3-5-2 6 5-2 5 3-2z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+function IconCamp() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M4 19l8-14 8 14"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9 19h6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M12 11l-3 5h6l-3-5z"
         stroke="currentColor"
         strokeWidth="2"
         strokeLinejoin="round"
